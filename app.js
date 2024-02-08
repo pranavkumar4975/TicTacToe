@@ -54,23 +54,35 @@ const EnableBoxes = () => {
 };
 
 const showWinner = (winner) => {
-  msg.innerText = `Congratulations Winner is ${winner}`;
+  if (winner === "Drawn") {
+    msg.innerText = "Game is Drawn";
+  } else {
+    msg.innerText = `Congratulations Winner is ${winner}`;
+  }
   msgContainer.classList.remove("hide");
   DisableBoxes();
 };
 
 const checkWinner = () => {
+  let flag = true;
+  let count = 0;
   for (let pattern of winPatterns) {
     let pos1val = boxes[pattern[0]].innerText;
     let pos2val = boxes[pattern[1]].innerText;
     let pos3val = boxes[pattern[2]].innerText;
 
     if (pos1val != "" && pos2val != "" && pos3val != "") {
+      count += 3;
       if (pos1val === pos2val && pos2val === pos3val) {
-        console.log("winner");
+        flag = false;
         showWinner(pos1val);
       }
     }
+  }
+
+  if (count == 24 && flag) {
+    let res = "Drawn";
+    showWinner(res);
   }
 };
 
